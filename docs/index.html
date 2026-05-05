@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="images/favicon.ico">
+  <title>ianon Docs</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Full-Width Header -->
+  <header class="header">
+    <img src="images/logo.svg" alt="Logo" class="logo">
+    <img src="images/logo-text.png" alt="Logo Text" class="logo-text">
+    <!-- <h1 class="header-title">Docs</h1> -->
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">
+      <span id="theme-icon"></span>
+      <span id="theme-label"></span>
+    </button>
+  </header>
+
+  <div class="container">
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+
+      <nav id="nav-menu" class="nav-menu">
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+      <div class="content" id="content">
+        <p class="loading">Loading documentation...</p>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" id="hljs-theme" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+  <script src="js/main.js"></script>
+</body>
+</html>
