@@ -1,0 +1,25 @@
+{
+  "Welcome": [
+    { "title": "Introduction", "path": "intro/introduction" },
+    { "title": "FAQ", "path": "intro/faq" },
+    { "title": "Links", "path": "intro/links" }
+  ],
+  "Get Started": [
+    { "title": "Download", "path": "get-started/download" },
+    { "title": "Walkthrough", "path": "get-started/walkthrough" },
+    { "title": "Providers and Models", "path": "get-started/providers-and-models" }
+  ],
+  "Privacy": [
+    { "title": "Secure Routing", "path": "privacy/secure-routing" },
+    { "title": "Identity Management (future)", "path": "privacy/identity-management", "disabled": true },
+    { "title": "API Service (future)", "path": "privacy/api-service", "disabled": true }
+  ],
+  "Roadmap": [
+    { "title": "Roadmap", "path": "roadmap/roadmap" }
+  ],
+  "Token": [
+    { "title": "$IANON", "path": "token/ianon" },
+    { "title": "Token Distribution", "path": "token/distribution" },
+    { "title": "Tokenomics", "path": "token/tokenomics" }
+  ]
+}
