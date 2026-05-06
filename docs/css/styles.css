@@ -12,7 +12,7 @@
   --text-secondary: #b8b7b4;
   --border: rgba(255, 255, 255, 0.1);
   --code-bg: #3c3c3a;
-  --code-border: #282826;
+  --code-border: #6f6f6d;
   --code-text: #e8a4b8;
 }
 
@@ -25,7 +25,7 @@
   --text: #4d4d4d;
   --text-secondary: #7d7d7d;
   --border: rgba(0, 0, 0, 0.08);
-  --code-bg: #f2f1ee  ;
+  --code-bg: #f2f1ee;
   --code-border: #d4c9b8;
   --code-text: #d97757;
 }
@@ -193,10 +193,17 @@ body {
   width: auto;
   max-width: 150px;
   object-fit: contain;
-  margin-right: 1rem;
+  margin-right: 0.5rem;
   border: 0px;
 }
-
+.docs-text {
+  height: 34px;
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
+  margin-right: 0.5rem;
+  border: 0px;
+}
 .theme-toggle {
   background: var(--bg);
   border: 0px solid var(--border);
@@ -320,12 +327,12 @@ code {
   font-size: 0.875rem;
   color: var(--code-text);
   border-radius: 5px;
+  border-color: var(--accent);
 }
 
 pre code {
-  /* color: var(--text-secondary); */
   background-color: var(--code-bg) !important;
-  border-color: var(--code-border);
+  border-color: var(--code-border) !important;
   border: 1px solid;
   color: inherit;
   background: none;
@@ -370,8 +377,9 @@ h3 code {
 }
 
 .alert-note {
-  border-left-color: #0969da;
   background-color: rgba(9, 105, 218, 0.05);
+  border: 0.5px solid;
+  border-color: #0969da;
 }
 
 [data-theme="dark"] .alert-note {
@@ -383,8 +391,9 @@ h3 code {
 }
 
 .alert-tip {
-  border-left-color: #1a7f37;
   background-color: rgba(26, 127, 55, 0.05);
+  border: 0.5px solid;
+  border-color: #1a7f37;
 }
 
 [data-theme="dark"] .alert-tip {
@@ -396,8 +405,9 @@ h3 code {
 }
 
 .alert-important {
-  border-left-color: #8250df;
   background-color: rgba(130, 80, 223, 0.05);
+  border: 0.5px solid;
+  border-color: #8250df;
 }
 
 [data-theme="dark"] .alert-important {
@@ -409,8 +419,9 @@ h3 code {
 }
 
 .alert-warning {
-  border-left-color: #9e6a03;
   background-color: rgba(158, 106, 3, 0.05);
+  border: 0.5px solid;
+  border-color: #9e6a03;
 }
 
 [data-theme="dark"] .alert-warning {
@@ -422,8 +433,9 @@ h3 code {
 }
 
 .alert-caution {
-  border-left-color: #d1242f;
   background-color: rgba(209, 36, 47, 0.05);
+  border: 0.5px solid;
+  border-color: #d1242f;
 }
 
 [data-theme="dark"] .alert-caution {
@@ -646,6 +658,15 @@ img {
   }
 
   .logo-text {
+  height: 25px;
+  width: auto;
+  max-width: 150px;
+  object-fit: contain;
+  margin-right: 0.2rem;
+  border: 0px;
+  }
+
+  .docs-text {
   height: 25px;
   width: auto;
   max-width: 150px;
