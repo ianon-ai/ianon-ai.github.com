@@ -4,7 +4,6 @@
 
 [data-theme="dark"] {
   --bg: #282826;
-  /* --surface: #282826; */
   --surface2: #3c3c3a;
   --accent: #c96442;
   --accent-dim:   rgba(212,132,93,.12);
@@ -18,7 +17,6 @@
 
 [data-theme="light"] {
   --bg: #f0eee6;
-  /* --surface: #f0eee6; */
   --surface2: #dfddd8;
   --accent: #c96442;
   --accent-dim:   rgba(212,132,93,.10);
