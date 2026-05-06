@@ -10,19 +10,24 @@
 <body>
   <!-- Full-Width Header -->
   <header class="header">
+    <button class="menu-toggle" id="menu-toggle" onclick="toggleSidebar()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
     <img src="images/logo.svg" alt="Logo" class="logo">
     <img src="images/logo-text.png" alt="Logo Text" class="logo-text">
     <!-- <h1 class="header-title">Docs</h1> -->
     <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">
       <span id="theme-icon"></span>
-      <span id="theme-label"></span>
+      <!-- <span id="theme-label"></span> -->
     </button>
   </header>
 
   <div class="container">
     <!-- Sidebar Navigation -->
     <aside class="sidebar">
-
+      <button class="sidebar-close" onclick="closeSidebar()" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text);">✕</button>
       <nav id="nav-menu" class="nav-menu">
       </nav>
     </aside>

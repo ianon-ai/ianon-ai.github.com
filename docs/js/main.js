@@ -39,8 +39,12 @@ function initializeTheme() {
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   const isDark = theme === 'dark';
-  document.getElementById('theme-icon').textContent = isDark ? '☀️' : '🌑';
-  document.getElementById('theme-label').textContent = isDark ? 'Light' : 'Dark';
+  const themeIcon = document.getElementById('theme-icon');
+  if (isDark) {
+    themeIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 18.09A6.09 6.09 0 1 1 18.09 12A6.1 6.1 0 0 1 12 18.09m0-11.18A5.09 5.09 0 1 0 17.09 12A5.1 5.1 0 0 0 12 6.91m-.5-4.342v1.6a.5.5 0 1 0 1 0v-1.6a.5.5 0 1 0-1 0m1 18.864v-1.6a.5.5 0 0 0-1 0v1.6a.5.5 0 1 0 1 0m8.932-9.932h-1.6a.5.5 0 0 0 0 1h1.6a.5.5 0 1 0 0-1m-18.864 1h1.6a.5.5 0 1 0 0-1h-1.6a.5.5 0 1 0 0 1m15.748-7.523l-.992.992l-.141.141a.5.5 0 0 0-.146.353a.5.5 0 0 0 .146.354a.5.5 0 0 0 .354.146a.52.52 0 0 0 .353-.146l.992-.992l.141-.141a.52.52 0 0 0 .147-.354a.5.5 0 0 0-.147-.353a.5.5 0 0 0-.353-.147a.52.52 0 0 0-.354.147M5.684 19.023l.992-.992l.141-.141a.5.5 0 0 0 .146-.353a.5.5 0 0 0-.146-.354a.5.5 0 0 0-.354-.146a.52.52 0 0 0-.353.146l-.992.992l-.141.141a.52.52 0 0 0-.147.354a.5.5 0 0 0 .147.353a.5.5 0 0 0 .353.147a.52.52 0 0 0 .354-.147m13.339-.707l-.992-.992l-.141-.141a.5.5 0 0 0-.353-.146a.5.5 0 0 0-.354.146a.5.5 0 0 0-.146.354a.52.52 0 0 0 .146.353l.992.992l.141.141a.52.52 0 0 0 .354.147a.5.5 0 0 0 .353-.147a.5.5 0 0 0 .147-.353a.52.52 0 0 0-.147-.354M4.977 5.684l.992.992l.141.141a.5.5 0 0 0 .353.146a.5.5 0 0 0 .354-.146a.5.5 0 0 0 .146-.354a.52.52 0 0 0-.146-.353l-.992-.992l-.141-.141a.52.52 0 0 0-.354-.147a.5.5 0 0 0-.353.147a.5.5 0 0 0-.147.353a.52.52 0 0 0 .147.354"></path></svg>';
+  } else {
+    themeIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path fill-rule="evenodd" d="M11.535 3.519a1 1 0 0 0-1.061-1.403C5.675 2.852 2 6.996 2 12c0 5.523 4.477 10 10 10s10-4.477 10-10l-.004-.28a1 1 0 0 0-1.571-.793a6 6 0 0 1-8.89-7.409" clip-rule="evenodd"></path></svg>';
+  }
 
   // Switch Highlight.js theme
   const hljsTheme = document.getElementById('hljs-theme');
@@ -116,6 +120,7 @@ function loadPageFromHash() {
   // Load the page if found
   if (foundPage) {
     loadPage(foundPage, foundTitle);
+    closeSidebar();
   } else {
     // Invalid hash, redirect to introduction
     window.location.hash = 'intro/introduction';
@@ -229,7 +234,36 @@ function renderMarkdown(markdown) {
   contentDiv.scrollTop = 0;
 }
 
-// NAVIGATION STATE
+// MOBILE SIDEBAR TOGGLE
+
+function toggleSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  const menuToggle = document.getElementById('menu-toggle');
+  sidebar.classList.toggle('open');
+  menuToggle.classList.toggle('active');
+}
+
+function closeSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  const menuToggle = document.getElementById('menu-toggle');
+  if (window.innerWidth <= 768) {
+    sidebar.classList.remove('open');
+    menuToggle.classList.remove('active');
+  }
+}
+
+// Close sidebar when clicking outside
+document.addEventListener('click', (e) => {
+  const sidebar = document.querySelector('.sidebar');
+  const menuToggle = document.getElementById('menu-toggle');
+  
+  // Check if click is outside sidebar and menu toggle
+  if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
+    if (sidebar.classList.contains('open')) {
+      closeSidebar();
+    }
+  }
+});
 
 function updateActiveNavItem(path) {
   // Remove active class from all items
