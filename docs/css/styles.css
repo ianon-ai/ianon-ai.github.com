@@ -61,7 +61,6 @@ body {
   max-width: 1400px;
   margin: 0 auto;
   box-sizing: border-box;
-  /* padding-left: calc(2rem + 280px + 2rem); */
 }
 
 .container {
