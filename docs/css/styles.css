@@ -50,7 +50,7 @@ body {
 .header {
   background: var(--bg);
   border-bottom: 1px solid var(--border);
-  padding: 0.1rem 3rem;
+  padding: 0rem 2rem;
   display: flex;
   /* justify-content: space-between; */
   align-items: center;
@@ -58,7 +58,7 @@ body {
   z-index: 101;
   transition: background var(--transition), border-color var(--transition);
   flex-shrink: 0;
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
   box-sizing: border-box;
 }
@@ -67,17 +67,17 @@ body {
   display: flex;
   flex: 1;
   overflow: hidden;
-  padding: 0 2rem;
-  max-width: 1400px;
+  padding: 0 0rem;
+  max-width: 1200px;
   margin: 0 auto;
   width: 100%;
-  gap: 2rem;
+  gap: 0rem;
 }
 
 /* SIDEBAR */
 
 .sidebar {
-  width: 280px;
+  width: 240px;
   background: var(--bg);
   border-right: 1px solid var(--bg);
   overflow-y: auto;
@@ -177,24 +177,25 @@ body {
   margin: 0;
 }
 .logo {
-  height: 50px;
+  height: 40px;
   width: auto;
   max-width: 150px;
   object-fit: contain;
   /* margin-right: 0.5rem; */
+  margin-left: 0rem;
   border: 0px;
   /* padding: 4px; */
 }
 .logo-text {
-  height: 34px;
+  height: 25px;
   width: auto;
-  max-width: 150px;
+  /* max-width: 150px; */
   object-fit: contain;
   margin-right: 0.5rem;
   border: 0px;
 }
 .docs-text {
-  height: 34px;
+  height: 25px;
   width: auto;
   max-width: 150px;
   object-fit: contain;
@@ -220,6 +221,7 @@ body {
   /* font-weight: 500; */
   flex-shrink: 0;
   margin-left: auto;
+  margin-right: 1.5rem;
 }
 
 .theme-toggle:hover {
@@ -229,11 +231,12 @@ body {
 .content {
   flex: 1;
   padding: 2rem 2rem;
-  max-width: 900px;
+  max-width: 1000px;
   overflow-y: auto;
   line-height: 1.8;
   margin: 0 auto;
   width: 100%;
+  justify-content: center;
 }
 
 .content.loading {
@@ -261,7 +264,7 @@ h2 {
   color: var(--text);
   margin-top: 2rem;
   margin-bottom: 1rem;
-  /* border-bottom: 0px solid var(--accent); */
+  border-bottom: 0px solid var(--surface2);
   padding-bottom: 0.5rem;
 }
 
@@ -269,7 +272,7 @@ h3 {
   font-size: 1.125rem;
   font-weight: 700;
   color: var(--text);
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   margin-bottom: 0.75rem;
 }
 
@@ -426,7 +429,7 @@ h3 code {
 }
 
 .alert-warning strong {
-  color: #9e6a03;
+  color: #db9c1e;
 }
 
 .alert-caution {
