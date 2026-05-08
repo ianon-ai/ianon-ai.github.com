@@ -204,13 +204,14 @@ function renderMarkdown(markdown) {
       'p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
       'ul', 'ol', 'li', 'blockquote', 'code', 'pre', 'table', 'thead', 'tbody',
       'tr', 'td', 'th', 'img', 'a', 'hr', 'div', 'span', 'del', 's',
+      'details', 'summary',
       'svg', 'g', 'circle', 'path', 'line', 'text', 'rect'
     ],
     ALLOWED_ATTR: [
       'href', 'title', 'target', 'rel', 'src', 'alt', 'width', 'height',
-      'align', 'class', 'id', 'viewBox', 'xmlns', 'fill', 'stroke', 'stroke-width',
+      'align', 'class', 'id', 'open', 'viewBox', 'xmlns', 'fill', 'stroke', 'stroke-width',
       'stroke-linecap', 'stroke-linejoin', 'cx', 'cy', 'r', 'd', 'x', 'y', 'x1', 'y1', 'x2', 'y2',
-      'font-size', 'font-weight', 'text-anchor', 'clip-rule', 'fill-rule'
+      'font-size', 'font-weight', 'text-anchor', 'clip-rule', 'fill-rule', 'data-target'
     ]
   });
 
@@ -228,6 +229,22 @@ function renderMarkdown(markdown) {
       link.rel = 'noopener noreferrer';
     }
   });
+
+  document.querySelectorAll('.faq-section-link').forEach(link => {
+  link.addEventListener('click', event => {
+    event.preventDefault();
+
+    const targetId = link.getAttribute('data-target');
+    const target = document.getElementById(targetId);
+
+    if (target) {
+      target.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  });
+});
 
   // Scroll to top
   contentDiv.scrollTop = 0;
