@@ -13,8 +13,6 @@ But what if you do not want that?
 
 ianon is for those of us who question that default.
 
----
-
 ## Private AI access via ianon
 
 At its core, ianon is a local, open-source LLM frontend built for anonymity.
@@ -27,7 +25,6 @@ Using Anyone and the routing logic built into ianon, your identity can be contin
 
 ianon is also being built to support more precise identity rotation over time, including different countries for different models, changing APIs, and more advanced privacy controls.
 
----
 
 ## Manage your AI tools in one place
 
@@ -47,8 +44,6 @@ ianon is an evolving product powered by community, privacy-first infrastructure,
 Thank you for choosing to say:
 
 > **I ANON.**
-
----
 
 ## Get started with the docs
 

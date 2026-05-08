@@ -1,15 +1,4 @@
-# FAQ
-
-<div class="faq-category-links">
-  <a href="#intro/faq" class="faq-section-link" data-target="faq-general">General</a>
-  <a href="#intro/faq" class="faq-section-link" data-target="faq-setup">Setup & Usage</a>
-  <a href="#intro/faq" class="faq-section-link" data-target="faq-privacy">Privacy</a>
-  <a href="#intro/faq" class="faq-section-link" data-target="faq-prerequisites">Prerequisites</a>
-</div>
-
----
-
-<h2 id="faq-general">General</h2>
+## General
 
 <div class="faq-list">
 
@@ -40,9 +29,7 @@
 
 </div>
 
----
-
-<h2 id="faq-setup">Setup & Usage</h2>
+## Setup & Usage
 
 <div class="faq-list">
 
@@ -80,9 +67,7 @@
 
 </div>
 
----
-
-<h2 id="faq-privacy">Privacy</h2>
+## Privacy 
 
 <div class="faq-list">
 
@@ -122,9 +107,7 @@
 
 </div>
 
----
-
-<h2 id="faq-prerequisites">Prerequisites</h2>
+## Prerequisites
 
 <div class="faq-list">
 

@@ -133,6 +133,24 @@ function loadPage(path, title) {
   currentPage = path;
   const contentDiv = document.getElementById('content');
 
+  // Find section name for breadcrumb
+  let sectionName = '';
+  for (const [section, items] of Object.entries(navStructure)) {
+    for (const item of items) {
+      if (item.path === path) {
+        sectionName = section;
+        break;
+      }
+    }
+    if (sectionName) break;
+  }
+
+  // Update breadcrumb
+  const breadcrumb = document.getElementById('breadcrumb');
+  if (breadcrumb) {
+    breadcrumb.innerHTML = `<span class="breadcrumb-section">${sectionName}</span><span class="breadcrumb-sep">/</span><span class="breadcrumb-page">${title}</span>`;
+  }
+
   // Update active navigation item
   updateActiveNavItem(path);
 
@@ -215,7 +233,7 @@ function renderMarkdown(markdown) {
     ]
   });
 
-  contentDiv.innerHTML = html;
+  document.getElementById('content-body').innerHTML = html;
 
     // Apply syntax highlighting to code blocks
   document.querySelectorAll('pre code').forEach(block => {
