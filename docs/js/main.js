@@ -238,9 +238,10 @@ function renderMarkdown(markdown) {
     const target = document.getElementById(targetId);
 
     if (target) {
-      target.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start'
+      const contentDiv = document.getElementById('content');
+      contentDiv.scrollTo({
+        top: target.offsetTop - 20,
+        behavior: 'smooth'
       });
     }
   });
