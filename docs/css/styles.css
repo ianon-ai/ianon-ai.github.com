@@ -897,12 +897,6 @@ img {
   }
 }
 
-/* Collapsable  */
-details {
-  border-bottom: 1px solid var(--border);
-  background: var(--bg);
-}
-
 /* FAQ accordion */
 
 .faq-category-links {
