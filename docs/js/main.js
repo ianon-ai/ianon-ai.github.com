@@ -81,7 +81,7 @@ function buildNavigation() {
       link.dataset.path = item.path;
 
       if (!item.disabled) {
-        link.href = `#${item.path}`;
+        link.href = `#/${item.path}`;
       }
 
       sectionDiv.appendChild(link);
@@ -94,15 +94,22 @@ function buildNavigation() {
 // PAGE LOADING
 
 function loadPageFromHash() {
-  const hash = window.location.hash.slice(1);
-  
-  // If no hash, load the first page
+  let hash = window.location.hash.slice(1);
+  if (hash.startsWith('/')) {
+    hash = hash.slice(1);  // Remove leading /
+  }
+  let headingId = null;
+
+  // Extract heading ID if present (e.g., "intro/faq@setup-usage")
+  if (hash.includes('@')) {
+    [hash, headingId] = hash.split('@');
+  }
+
   if (!hash) {
-    window.location.hash = 'intro/introduction';
+    window.location.hash = '/intro/introduction';
     return;
   }
 
-  // Find the page in navigation structure
   let foundPage = null;
   let foundTitle = null;
 
@@ -117,17 +124,15 @@ function loadPageFromHash() {
     if (foundPage) break;
   }
 
-  // Load the page if found
   if (foundPage) {
-    loadPage(foundPage, foundTitle);
+    loadPage(foundPage, foundTitle, headingId);
     closeSidebar();
   } else {
-    // Invalid hash, redirect to introduction
     window.location.hash = 'intro/introduction';
   }
 }
 
-function loadPage(path, title) {
+function loadPage(path, title, headingId = null) {
   if (currentPage === path) return;
 
   currentPage = path;
@@ -163,7 +168,7 @@ function loadPage(path, title) {
       return response.text();
     })
     .then(markdown => {
-      renderMarkdown(markdown);
+      renderMarkdown(markdown, headingId);
     })
     .catch(error => {
       contentDiv.innerHTML = `
@@ -179,7 +184,7 @@ function loadPage(path, title) {
 
 // MARKDOWN RENDERING
 
-function renderMarkdown(markdown) {
+function renderMarkdown(markdown, headingId = null) {
   const contentDiv = document.getElementById('content');
 
   // Configure marked with syntax highlighting
@@ -267,6 +272,57 @@ function renderMarkdown(markdown) {
 
   // Scroll to top
   contentDiv.scrollTop = 0;
+
+  // Add anchor links to headings
+  addHeadingAnchors();
+
+    // Scroll to heading if provided
+  if (headingId) {
+    const heading = document.getElementById(headingId);
+    if (heading) {
+      heading.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+}
+
+function addHeadingAnchors() {
+  const headings = document.querySelectorAll('#content-body h1, #content-body h2, #content-body h3');
+  
+  headings.forEach((heading, index) => {
+    // Create ID from heading text if it doesn't have one
+    if (!heading.id) {
+      heading.id = heading.textContent
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/\s+/g, '-');
+    }
+
+    // Create anchor link
+    const anchor = document.createElement('a');
+    anchor.href = `#${heading.id}`;
+    anchor.className = 'heading-anchor';
+    anchor.textContent = '#';
+    anchor.title = 'Copy link to this heading';
+    anchor.onclick = (e) => {
+      e.preventDefault();
+      let currentPath = window.location.hash.slice(1);
+      
+      // Remove any existing heading ID
+      if (currentPath.includes('@')) {
+        currentPath = currentPath.split('@')[0];
+      }
+      
+      const url = `${window.location.origin}${window.location.pathname}#${currentPath}@${heading.id}`;
+      console.log('Copied URL:', url);
+      navigator.clipboard.writeText(url);
+      // Visual feedback
+      anchor.textContent = '✓';
+      setTimeout(() => anchor.textContent = '#', 1500);
+    };
+
+    heading.appendChild(anchor);
+  });
 }
 
 // MOBILE SIDEBAR TOGGLE
