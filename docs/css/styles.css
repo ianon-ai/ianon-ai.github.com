@@ -55,7 +55,6 @@ body {
   border-bottom: 1px solid var(--border);
   padding: 0rem 2rem;
   display: flex;
-  /* justify-content: space-between; */
   align-items: center;
   width: 100%;
   z-index: 101;
@@ -148,7 +147,6 @@ body {
 .nav-item.active {
   background: var(--accent-dim);
   color: var(--accent);
-  /* border-left-color: var(--accent); */
   font-weight: 600;
 }
 
@@ -184,15 +182,13 @@ body {
   width: auto;
   max-width: 150px;
   object-fit: contain;
-  /* margin-right: 0.5rem; */
+  margin-right: 0.2rem;
   margin-left: 0rem;
   border: 0px;
-  /* padding: 4px; */
 }
 .logo-text {
   height: 25px;
   width: auto;
-  /* max-width: 150px; */
   object-fit: contain;
   margin-right: 0.5rem;
   border: 0px;
@@ -221,7 +217,6 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  /* font-weight: 500; */
   flex-shrink: 0;
   margin-left: auto;
   margin-right: 1.5rem;
@@ -333,10 +328,6 @@ a:hover {
    ============================================ */
 
 pre {
-  /* background: var(--accent); */
-  /* border: 0px solid var(--border); */
-  /* border-radius: 8px; */
-  /* padding: 1rem; */
   overflow-x: auto;
   margin-bottom: 1rem;
   line-height: 1.5;
@@ -376,7 +367,6 @@ h3 code {
    ============================================ */
 
 .alert {
-  /* border-left: 4px solid; */
   padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 6px;
@@ -598,8 +588,7 @@ img {
 /* ============================================
    RESPONSIVE DESIGN
    ============================================ */
-
-   /* Hamburger Menu (hidden by default) */
+   
 .menu-toggle {
   display: none;
   flex-direction: column;
@@ -637,6 +626,174 @@ img {
 
 .sidebar-close {
   display: none;
+}
+
+/* Grid */
+
+.docs-card-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 24px;
+}
+
+
+.docs-card {
+  display: block;
+  padding: 0 !important;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.docs-card:hover {
+  transform: translateY(-5px);
+  text-decoration: none;
+  border: 1px solid var(--accent);
+  opacity: 1; 
+  box-shadow: 0 1px 10px var(--accent);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
+}
+
+
+.docs-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  display: block;
+  margin: 0;
+  border: 0 !important;
+  border-radius: 0px 0px 0 0;
+}
+
+.docs-card-title {
+  height: 45px;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--text);
+  background: var(--surface2);
+}
+
+.docs-card-disabled {
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.docs-card-disabled:hover {
+  transform: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* FAQ accordion */
+
+.faq-category-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  margin: 1.5rem 0 1.75rem;
+}
+
+.faq-category-links a,
+.faq-category-links span {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.faq-section {
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.faq-list {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+  background: var(--bg);
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.faq-item:last-child {
+  border-bottom: 0;
+}
+
+.faq-item summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 1rem 1.25rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item summary::before {
+  content: "›";
+  font-size: 1.25rem;
+  line-height: 1;
+  transition: transform var(--transition);
+  color: var(--text-secondary);
+}
+
+.faq-item[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.faq-item[open] summary {
+  color: var(--text);
+}
+
+.faq-item .faq-answer {
+  padding: 0 1.25rem 1rem 2.75rem;
+  color: var(--text);
+}
+
+.faq-item .faq-answer p:last-child,
+.faq-item .faq-answer ul:last-child {
+  margin-bottom: 0;
+}
+
+/* Anchors */
+
+.heading-anchor {
+  margin-left: 0.5rem;
+  opacity: 0;
+  text-decoration: none;
+  color: var(--text-dim);
+  font-size: 1.5rem;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+}
+
+h1:hover .heading-anchor,
+h2:hover .heading-anchor,
+h3:hover .heading-anchor {
+  opacity: 1;
+}
+
+.heading-anchor:hover {
+  color: var(--accent);
 }
   
 @media (max-width: 950px) {
@@ -747,6 +904,16 @@ img {
     padding: 0.5rem 0.5rem;
     font-size: 0.9rem;
   }
+
+  .heading-anchor {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .docs-card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 480px) {
@@ -826,184 +993,8 @@ img {
   }
 }
 
-
-
-/* Grid */
-
-.docs-card-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-  margin-top: 24px;
-}
-
-
-.docs-card {
-  display: block;
-  padding: 0 !important;
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  text-decoration: none;
-  color: var(--text);
-}
-
-.docs-card:hover {
-  transform: translateY(-5px);
-  text-decoration: none;
-  border: 1px solid var(--accent);
-  opacity: 1; 
-  box-shadow: 0 1px 10px var(--accent);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  overflow: hidden;
-}
-
-
-.docs-card img {
-  width: 100%;
-  height: 150px;
-  object-fit: cover;
-  display: block;
-  margin: 0;
-  border: 0 !important;
-  border-radius: 0px 0px 0 0;
-}
-
-.docs-card-title {
-  height: 45px;
-  padding: 0 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  font-weight: 500;
-  line-height: 1.2;
-  color: var(--text);
-  background: var(--surface2);
-}
-
-.docs-card-disabled {
-  cursor: default;
-  pointer-events: none;
-  opacity: 0.3;
-}
-
-.docs-card-disabled:hover {
-  transform: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
-
-@media (max-width: 900px) {
-  .docs-card-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 600px) {
+@media (max-width: 400px) {
   .docs-card-grid {
     grid-template-columns: 1fr;
   }
-}
-
-/* FAQ accordion */
-
-.faq-category-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.25rem;
-  margin: 1.5rem 0 1.75rem;
-}
-
-.faq-category-links a,
-.faq-category-links span {
-  color: var(--accent);
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.faq-section {
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
-}
-
-.faq-list {
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  overflow: hidden;
-  margin-bottom: 2rem;
-  background: var(--bg);
-}
-
-.faq-item {
-  border-bottom: 1px solid var(--border);
-  background: var(--bg);
-}
-
-.faq-item:last-child {
-  border-bottom: 0;
-}
-
-.faq-item summary {
-  cursor: pointer;
-  list-style: none;
-  padding: 1rem 1.25rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.faq-item summary::-webkit-details-marker {
-  display: none;
-}
-
-.faq-item summary::before {
-  content: "›";
-  font-size: 1.25rem;
-  line-height: 1;
-  transition: transform var(--transition);
-  color: var(--text-secondary);
-}
-
-.faq-item[open] summary::before {
-  transform: rotate(90deg);
-}
-
-.faq-item[open] summary {
-  color: var(--text);
-}
-
-.faq-item .faq-answer {
-  padding: 0 1.25rem 1rem 2.75rem;
-  color: var(--text);
-}
-
-.faq-item .faq-answer p:last-child,
-.faq-item .faq-answer ul:last-child {
-  margin-bottom: 0;
-}
-
-/* Anchors */
-
-.heading-anchor {
-  margin-left: 0.5rem;
-  opacity: 0;
-  text-decoration: none;
-  color: var(--text-dim);
-  font-size: 1.5rem;
-  transition: opacity 0.2s ease;
-  cursor: pointer;
-}
-
-h1:hover .heading-anchor,
-h2:hover .heading-anchor,
-h3:hover .heading-anchor {
-  opacity: 1;
-}
-
-.heading-anchor:hover {
-  color: var(--accent);
 }
