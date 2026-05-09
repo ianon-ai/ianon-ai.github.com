@@ -983,7 +983,7 @@ img {
   margin-left: 0.5rem;
   opacity: 0;
   text-decoration: none;
-  color: var(--text);
+  color: var(--text-dim);
   font-size: 1.5rem;
   transition: opacity 0.2s ease;
   cursor: pointer;
