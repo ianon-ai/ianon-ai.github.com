@@ -197,16 +197,25 @@ function initializeTheme() {
   const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const theme = saved || (dark ? 'dark' : 'light');
   applyTheme(theme);
+
+  const docsText = document.querySelector('.docs-text');
+  if (docsText) {
+    docsText.src = theme === 'dark' ? '/images/docs-text-white.png' : '/images/docs-text-black.png';
+  }
 }
 
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   const isDark = theme === 'dark';
   const themeIcon = document.getElementById('theme-icon');
+  const docsText = document.querySelector('.docs-text');
+  
   if (isDark) {
     themeIcon.innerHTML = '<svg viewBox="0 0 21 21" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 14.5c2.219 0 4-1.763 4-3.982a4.003 4.003 0 0 0-4-4.018c-2.219 0-4 1.781-4 4s1.781 4 4 4M4.136 4.136L5.55 5.55m9.9 9.9l1.414 1.414M1.5 10.5h2m14 0h2M4.135 16.863L5.55 15.45m9.899-9.9l1.414-1.415M10.5 19.5v-2m0-14v-2" opacity=".3"/><g transform="translate(-210 -1)"><path d="M220.5 2.5v2m6.5.5l-1.5 1.5"/><circle cx="220.5" cy="11.5" r="4"/><path d="m214 5l1.5 1.5m5 14v-2m6.5-.5l-1.5-1.5M214 18l1.5-1.5m-4-5h2m14 0h2"/></g></svg>';
+    docsText.src = '/images/docs-text-white.png';
   } else {
     themeIcon.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 12.808c-.5 5.347-5.849 9.14-11.107 7.983C-.078 18.6 1.15 3.909 11.11 3 6.395 9.296 14.619 17.462 21 12.808"/></svg>';
+    docsText.src = '/images/docs-text-black.png';
   }
 
   // Switch Highlight.js theme
@@ -458,7 +467,7 @@ function addHeadingAnchors() {
         .split('@')[0]
         .replace(/^\/+|\/+$/g, '');
 
-      const url = `${window.location.origin}${getBasePath()}/#/${pagePath}@${heading.id}`;
+      const url = `${window.location.origin}${getBasePath()}/${pagePath}@${heading.id}`;
 
       console.log('Copied URL:', url);
       navigator.clipboard.writeText(url);
