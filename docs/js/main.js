@@ -29,10 +29,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const hash = window.location.hash;
 
     if (hash.startsWith('#/')) {
-      const cleanPath = hash.slice(2);
-      navigateTo(cleanPath, null, true);
+      let cleanPath = hash.slice(2);
+      let headingId = null;
+
+      if (cleanPath.includes('@')) {
+        [cleanPath, headingId] = cleanPath.split('@');
+      }
+
+      navigateTo(cleanPath, headingId, true);
     }
   });
+
 });
 
 
@@ -46,9 +53,28 @@ function getBasePath() {
   return '';
 }
 
+const routeAliases = {
+  'intro/introduction': 'introduction',
+  'intro/faq': 'faq',
+  'intro/links': 'links',
+  'roadmap/roadmap': 'roadmap'
+};
+
+const reverseRouteAliases = Object.fromEntries(
+  Object.entries(routeAliases).map(([internalPath, publicPath]) => [publicPath, internalPath])
+);
+
+function getPublicPath(path) {
+  return routeAliases[path] || path;
+}
+
+function getInternalPath(path) {
+  return reverseRouteAliases[path] || path;
+}
+
 function getCleanUrl(path, headingId = null) {
   const basePath = getBasePath();
-  const cleanPath = path.replace(/^\/+|\/+$/g, '');
+  const cleanPath = getPublicPath(path).replace(/^\/+|\/+$/g, '');
   const heading = headingId ? `#${headingId}` : '';
 
   return `${basePath}/${cleanPath}${heading}`;
@@ -77,6 +103,8 @@ function getPathFromLocation() {
   if (path.includes('@')) {
     [path, headingId] = path.split('@');
   }
+
+  path = getInternalPath(path);
 
   if (!path) {
     path = 'intro/introduction';
@@ -342,7 +370,24 @@ function renderMarkdown(markdown, headingId = null) {
 
   document.getElementById('content-body').innerHTML = html;
 
-    // Apply syntax highlighting to code blocks
+  // Fix relative image paths for clean URLs
+  document.querySelectorAll('#content-body img').forEach(img => {
+    const src = img.getAttribute('src');
+
+    if (
+      !src ||
+      src.startsWith('http://') ||
+      src.startsWith('https://') ||
+      src.startsWith('data:') ||
+      src.startsWith('/')
+    ) {
+      return;
+    }
+
+    img.src = `${getBasePath()}/${src.replace(/^\.?\//, '')}`;
+  });
+
+  // Apply syntax highlighting to code blocks
   document.querySelectorAll('pre code').forEach(block => {
     hljs.highlightElement(block);
   });
@@ -408,17 +453,16 @@ function addHeadingAnchors() {
     anchor.title = 'Copy link to this heading';
     anchor.onclick = (e) => {
       e.preventDefault();
-      let currentPath = window.location.hash.slice(1);
-      
-      // Remove any existing heading ID
-      if (currentPath.includes('@')) {
-        currentPath = currentPath.split('@')[0];
-      }
-      
-      const url = `${window.location.origin}${window.location.pathname}#${currentPath}@${heading.id}`;
+
+      const pagePath = (currentPage || 'intro/introduction')
+        .split('@')[0]
+        .replace(/^\/+|\/+$/g, '');
+
+      const url = `${window.location.origin}${getBasePath()}/#/${pagePath}@${heading.id}`;
+
       console.log('Copied URL:', url);
       navigator.clipboard.writeText(url);
-      // Visual feedback
+
       anchor.textContent = '✓';
       setTimeout(() => anchor.textContent = '#', 1500);
     };
@@ -449,7 +493,7 @@ function closeSidebar() {
 document.addEventListener('click', (e) => {
   const sidebar = document.querySelector('.sidebar');
   const menuToggle = document.getElementById('menu-toggle');
-  
+
   // Check if click is outside sidebar and menu toggle
   if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
     if (sidebar.classList.contains('open')) {
