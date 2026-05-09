@@ -847,16 +847,16 @@ img {
   overflow: hidden;
   text-decoration: none;
   color: var(--text);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .docs-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
   text-decoration: none;
-  border: 2px solid var(--accent);
+  border: 1px solid var(--accent);
   opacity: 1; 
+  box-shadow: 0 1px 10px var(--accent);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  overflow: hidden;
 }
 
 
@@ -886,7 +886,7 @@ img {
 .docs-card-disabled {
   cursor: default;
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 .docs-card-disabled:hover {
