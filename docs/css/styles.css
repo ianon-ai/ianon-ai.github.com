@@ -792,10 +792,6 @@ h3:hover .heading-anchor {
   opacity: 1;
 }
 
-.heading-anchor:hover {
-  color: var(--accent);
-}
-  
 @media (max-width: 950px) {
   body {
     overflow-x: hidden;
