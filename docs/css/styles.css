@@ -841,12 +841,12 @@ img {
 .docs-card {
   display: block;
   padding: 0 !important;
-  background: transparent;
-  border: 0;
+  background: var(--surface2);
+  border: 1.5px solid var(--border);
   border-radius: 10px;
   overflow: hidden;
   text-decoration: none;
-  color: inherit;
+  color: var(--text);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -877,8 +877,8 @@ img {
   text-align: center;
   font-weight: 500;
   line-height: 1.2;
-  color: #222;
-  background: #ffffff;
+  color: var(--text);
+  background: var(--surface2);
 }
 
 .docs-card-disabled {
