@@ -57,7 +57,7 @@ Use these docs to learn more about the product, its privacy features, the projec
   </a>
 
   <a class="docs-card docs-card-disabled" aria-disabled="true">
-    <img src="images/cards/AI%20Efficiency.png" alt="AI Efficiency">
+    <img src="images/cards/ai-efficiency.png" alt="AI Efficiency">
     <div class="docs-card-title">AI Efficiency</div>
   </a>
 
@@ -71,7 +71,7 @@ Use these docs to learn more about the product, its privacy features, the projec
     <div class="docs-card-title">Privacy</div>
   </a>
 
-  <a class="docs-card" href="/token/tokenomics">
+  <a class="docs-card" href="#/token/tokenomics">
     <img src="images/cards/Tokenomics.png" alt="Tokenomics">
     <div class="docs-card-title">Tokenomics</div>
   </a>
