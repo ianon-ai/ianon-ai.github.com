@@ -4,14 +4,13 @@ let currentPage = null;
 // Initialize application
 document.addEventListener('DOMContentLoaded', () => {
   initializeTheme();
-  
-  // Load navigation structure from JSON
-  fetch('nav.json')
+
+  fetch(`${getBasePath()}/nav.json`)
     .then(response => response.json())
     .then(data => {
       navStructure = data;
       buildNavigation();
-      loadPageFromHash();
+      loadPageFromUrl();
     })
     .catch(error => {
       console.error('Error loading navigation:', error);
@@ -22,10 +21,146 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       `;
     });
-  
-  // Listen for hash changes (browser back/forward, direct links)
-  window.addEventListener('hashchange', loadPageFromHash);
+
+  window.addEventListener('popstate', loadPageFromUrl);
+
+  // Backward compatibility for old #/ links
+  window.addEventListener('hashchange', () => {
+    const hash = window.location.hash;
+
+    if (hash.startsWith('#/')) {
+      const cleanPath = hash.slice(2);
+      navigateTo(cleanPath, null, true);
+    }
+  });
 });
+
+
+function getBasePath() {
+  const repoPath = '/ianon-ai.github.com';
+
+  if (window.location.pathname.startsWith(repoPath)) {
+    return repoPath;
+  }
+
+  return '';
+}
+
+function getCleanUrl(path, headingId = null) {
+  const basePath = getBasePath();
+  const cleanPath = path.replace(/^\/+|\/+$/g, '');
+  const heading = headingId ? `#${headingId}` : '';
+
+  return `${basePath}/${cleanPath}${heading}`;
+}
+
+function getPathFromLocation() {
+  const basePath = getBasePath();
+  let path = window.location.pathname;
+
+  if (basePath && path.startsWith(basePath)) {
+    path = path.slice(basePath.length);
+  }
+
+  path = path.replace(/^\/+|\/+$/g, '');
+
+  let headingId = null;
+
+  // Old hash-route support: /#/privacy/secure-routing
+  if (window.location.hash.startsWith('#/')) {
+    path = window.location.hash.slice(2).replace(/^\/+|\/+$/g, '');
+  } else if (window.location.hash.length > 1) {
+    headingId = window.location.hash.slice(1);
+  }
+
+  // Old @ heading support
+  if (path.includes('@')) {
+    [path, headingId] = path.split('@');
+  }
+
+  if (!path) {
+    path = 'intro/introduction';
+  }
+
+  return { path, headingId };
+}
+
+function findPage(path) {
+  for (const [section, items] of Object.entries(navStructure)) {
+    for (const item of items) {
+      if (item.path === path && !item.disabled) {
+        return {
+          path: item.path,
+          title: item.title,
+          section
+        };
+      }
+    }
+  }
+
+  return null;
+}
+
+function resolveRoute(path) {
+  const exactPage = findPage(path);
+
+  if (exactPage) {
+    return exactPage;
+  }
+
+  // Section route support:
+  // /privacy -> first page under privacy/*
+  // /token -> first page under token/*
+  if (!path.includes('/')) {
+    for (const [section, items] of Object.entries(navStructure)) {
+      const firstItem = items.find(item => !item.disabled && item.path.startsWith(`${path}/`));
+
+      if (firstItem) {
+        return {
+          path: firstItem.path,
+          title: firstItem.title,
+          section
+        };
+      }
+    }
+  }
+
+  return findPage('intro/introduction');
+}
+
+function navigateTo(path, headingId = null, replace = false) {
+  const resolvedPage = resolveRoute(path);
+
+  if (!resolvedPage) return;
+
+  const url = getCleanUrl(resolvedPage.path, headingId);
+
+  if (replace) {
+    window.history.replaceState({}, '', url);
+  } else {
+    window.history.pushState({}, '', url);
+  }
+
+  loadPageFromUrl();
+}
+
+function loadPageFromUrl() {
+  const { path, headingId } = getPathFromLocation();
+  const resolvedPage = resolveRoute(path);
+
+  if (!resolvedPage) {
+    navigateTo('intro/introduction', null, true);
+    return;
+  }
+
+  if (path !== resolvedPage.path) {
+    window.history.replaceState({}, '', getCleanUrl(resolvedPage.path, headingId));
+  }
+
+  loadPage(resolvedPage.path, resolvedPage.title, headingId);
+  closeSidebar();
+}
+
 
 // THEME MANAGEMENT
 
@@ -81,7 +216,12 @@ function buildNavigation() {
       link.dataset.path = item.path;
 
       if (!item.disabled) {
-        link.href = `#/${item.path}`;
+        link.href = getCleanUrl(item.path);
+
+        link.addEventListener('click', event => {
+          event.preventDefault();
+          navigateTo(item.path);
+        });
       }
 
       sectionDiv.appendChild(link);
@@ -93,44 +233,6 @@ function buildNavigation() {
 
 // PAGE LOADING
 
-function loadPageFromHash() {
-  let hash = window.location.hash.slice(1);
-  if (hash.startsWith('/')) {
-    hash = hash.slice(1);  // Remove leading /
-  }
-  let headingId = null;
-
-  // Extract heading ID if present (e.g., "intro/faq@setup-usage")
-  if (hash.includes('@')) {
-    [hash, headingId] = hash.split('@');
-  }
-
-  if (!hash) {
-    window.location.hash = '/intro/introduction';
-    return;
-  }
-
-  let foundPage = null;
-  let foundTitle = null;
-
-  for (const [section, items] of Object.entries(navStructure)) {
-    for (const item of items) {
-      if (item.path === hash) {
-        foundPage = item.path;
-        foundTitle = item.title;
-        break;
-      }
-    }
-    if (foundPage) break;
-  }
-
-  if (foundPage) {
-    loadPage(foundPage, foundTitle, headingId);
-    closeSidebar();
-  } else {
-    window.location.hash = 'intro/introduction';
-  }
-}
 
 function loadPage(path, title, headingId = null) {
   if (currentPage === path) return;
@@ -160,7 +262,7 @@ function loadPage(path, title, headingId = null) {
   updateActiveNavItem(path);
 
   // Fetch and render markdown
-  fetch(`content/${path}.md`)
+  fetch(`${getBasePath()}/content/${path}.md`)
     .then(response => {
       if (!response.ok) {
         throw new Error(`Failed to load ${path}.md`);
